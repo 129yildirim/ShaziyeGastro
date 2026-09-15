@@ -2,14 +2,14 @@
    Tokens
 --------------------------------------------- */
 :root {
-  --ink: #241a12;
-  --ink-soft: #6b5c4c;
-  --paprika: #b33c1e;
-  --paprika-dark: #8f2f16;
-  --olive: #55613c;
-  --saffron: #c68a2e;
-  --cream: #f7efdf;
-  --cream-soft: #fbf6ec;
+  --ink: #2a0e15;
+  --ink-soft: #7d5c62;
+  --paprika: #8c1c3f;
+  --paprika-dark: #6b1330;
+  --olive: #4f5d3e;
+  --saffron: #c9a04a;
+  --cream: #f7e9e0;
+  --cream-soft: #fdf6f1;
   --line: rgba(36, 26, 18, 0.12);
   --line-on-dark: rgba(247, 239, 223, 0.18);
 
