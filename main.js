@@ -69,7 +69,37 @@ const MENU = {
 
 const tabsEl = document.getElementById('menuTabs');
 const gridEl = document.getElementById('menuGrid');
+const searchInput = document.getElementById('menuSearch');
+const searchClearBtn = document.getElementById('menuSearchClear');
+const resultsInfoEl = document.getElementById('menuResultsInfo');
 const categories = Object.keys(MENU);
+
+/* Menü büyüdükçe (ör. 100+ ürün) sayfayı kullanışlı tutmak için:
+   1) Kategori başına bir seferde sınırlı sayıda ürün gösterilir,
+      "Daha Fazla Göster" ile devamı yüklenir.
+   2) Üstteki arama kutusu tüm kategorilerde anında filtreler.
+   Yeni ürün eklemek hâlâ sadece MENU nesnesine satır eklemek kadar basit. */
+const PAGE_SIZE = 8;
+let currentCategory = categories[0];
+let visibleCount = PAGE_SIZE;
+
+function normalize(str) {
+  return str.toLocaleLowerCase('tr-TR');
+}
+
+function buildItemRow(item, categoryLabel) {
+  const row = document.createElement('div');
+  row.className = 'menu-item';
+  row.innerHTML = `
+    <div class="menu-item-text">
+      ${categoryLabel ? `<span class="menu-item-cat">${categoryLabel}</span>` : ''}
+      <h3>${item.name}</h3>
+      <p>${item.desc}</p>
+    </div>
+    <div class="menu-item-price">${item.price}</div>
+  `;
+  return row;
+}
 
 function renderTabs(active) {
   tabsEl.innerHTML = '';
@@ -78,9 +108,11 @@ function renderTabs(active) {
     btn.className = 'menu-tab';
     btn.type = 'button';
     btn.setAttribute('role', 'tab');
-    btn.textContent = cat;
     btn.setAttribute('aria-selected', cat === active ? 'true' : 'false');
+    btn.innerHTML = `${cat} <span class="menu-tab-count">${MENU[cat].length}</span>`;
     btn.addEventListener('click', () => {
+      currentCategory = cat;
+      visibleCount = PAGE_SIZE;
       renderTabs(cat);
       renderGrid(cat);
     });
@@ -98,23 +130,79 @@ function renderGrid(cat) {
     gridEl.appendChild(empty);
     return;
   }
-  items.forEach((item) => {
-    const row = document.createElement('div');
-    row.className = 'menu-item';
-    row.innerHTML = `
-      <div class="menu-item-text">
-        <h3>${item.name}</h3>
-        <p>${item.desc}</p>
-      </div>
-      <div class="menu-item-price">${item.price}</div>
-    `;
-    gridEl.appendChild(row);
+
+  items.slice(0, visibleCount).forEach((item) => {
+    gridEl.appendChild(buildItemRow(item));
   });
+
+  const remaining = items.length - visibleCount;
+  if (remaining > 0) {
+    const moreBtn = document.createElement('button');
+    moreBtn.type = 'button';
+    moreBtn.className = 'menu-load-more';
+    moreBtn.textContent = `Daha Fazla Göster (${remaining})`;
+    moreBtn.addEventListener('click', () => {
+      visibleCount += PAGE_SIZE;
+      renderGrid(cat);
+    });
+    gridEl.appendChild(moreBtn);
+  }
 }
 
+function renderSearchResults(query) {
+  const q = normalize(query.trim());
+  const matches = [];
+  categories.forEach((cat) => {
+    MENU[cat].forEach((item) => {
+      if (normalize(item.name).includes(q) || normalize(item.desc).includes(q)) {
+        matches.push({ item, cat });
+      }
+    });
+  });
+
+  resultsInfoEl.hidden = false;
+  resultsInfoEl.textContent = matches.length
+    ? `"${query}" için ${matches.length} sonuç bulundu.`
+    : `"${query}" için sonuç bulunamadı.`;
+
+  gridEl.innerHTML = '';
+  if (matches.length === 0) {
+    const empty = document.createElement('p');
+    empty.className = 'menu-empty';
+    empty.textContent = 'Aramanızla eşleşen bir lezzet bulunamadı. Farklı bir kelime deneyin.';
+    gridEl.appendChild(empty);
+    return;
+  }
+  matches.forEach(({ item, cat }) => gridEl.appendChild(buildItemRow(item, cat)));
+}
+
+function exitSearch() {
+  resultsInfoEl.hidden = true;
+  tabsEl.hidden = false;
+  renderGrid(currentCategory);
+}
+
+searchInput.addEventListener('input', () => {
+  const query = searchInput.value;
+  searchClearBtn.hidden = query.length === 0;
+  if (query.trim().length === 0) {
+    exitSearch();
+    return;
+  }
+  tabsEl.hidden = true;
+  renderSearchResults(query);
+});
+
+searchClearBtn.addEventListener('click', () => {
+  searchInput.value = '';
+  searchClearBtn.hidden = true;
+  exitSearch();
+  searchInput.focus();
+});
+
 if (categories.length) {
-  renderTabs(categories[0]);
-  renderGrid(categories[0]);
+  renderTabs(currentCategory);
+  renderGrid(currentCategory);
 }
 
 /* ==========================================================
