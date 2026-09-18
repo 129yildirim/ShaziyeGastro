@@ -1,8 +1,14 @@
-// Header scroll state
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// Header scroll state + scroll progress bar
 const header = document.getElementById('siteHeader');
+const scrollProgress = document.getElementById('scrollProgress');
 window.addEventListener('scroll', () => {
   header.classList.toggle('scrolled', window.scrollY > 40);
-});
+  const max = document.documentElement.scrollHeight - window.innerHeight;
+  const pct = max > 0 ? (window.scrollY / max) * 100 : 0;
+  if (scrollProgress) scrollProgress.style.width = pct + '%';
+}, { passive: true });
 
 // Mobile nav
 const menuToggle = document.getElementById('menuToggle');
@@ -30,6 +36,114 @@ revealEls.forEach(el => io.observe(el));
 
 // Footer year
 document.getElementById('year').textContent = new Date().getFullYear();
+
+/* ==========================================================
+   Hero embers — a lightweight canvas particle drift, tying
+   the "odun ateşi" (wood-fire) motif into the hero itself.
+   ========================================================== */
+(function heroEmbers() {
+  const canvas = document.getElementById('emberCanvas');
+  if (!canvas || prefersReducedMotion) return;
+  const ctx = canvas.getContext('2d');
+  const hero = canvas.closest('.hero');
+  let w, h, particles, rafId;
+
+  function resize() {
+    w = canvas.width = hero.clientWidth;
+    h = canvas.height = hero.clientHeight;
+  }
+
+  function makeParticle() {
+    return {
+      x: Math.random() * w,
+      y: h + Math.random() * 60,
+      r: 1 + Math.random() * 2.2,
+      speed: 0.35 + Math.random() * 0.7,
+      drift: (Math.random() - 0.5) * 0.6,
+      flicker: Math.random() * Math.PI * 2,
+      hue: Math.random() > 0.5 ? '201,160,74' : '224,122,58'
+    };
+  }
+
+  function init() {
+    resize();
+    const count = Math.max(18, Math.min(42, Math.floor(w / 28)));
+    particles = Array.from({ length: count }, () => {
+      const p = makeParticle();
+      p.y = Math.random() * h; // stagger initial heights
+      return p;
+    });
+  }
+
+  function step() {
+    ctx.clearRect(0, 0, w, h);
+    particles.forEach((p) => {
+      p.y -= p.speed;
+      p.x += p.drift + Math.sin(p.flicker) * 0.15;
+      p.flicker += 0.05;
+      if (p.y < -10) {
+        Object.assign(p, makeParticle());
+        p.y = h + 10;
+      }
+      const alpha = Math.min(1, (h - p.y) / h) * 0.8 * (0.5 + 0.5 * Math.sin(p.flicker));
+      ctx.beginPath();
+      ctx.fillStyle = `rgba(${p.hue}, ${Math.max(0.08, alpha)})`;
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fill();
+    });
+    rafId = requestAnimationFrame(step);
+  }
+
+  init();
+  step();
+  window.addEventListener('resize', () => {
+    cancelAnimationFrame(rafId);
+    init();
+    step();
+  });
+})();
+
+/* Hero mosaic pattern parallax on mouse move */
+(function heroParallax() {
+  const hero = document.querySelector('.hero');
+  const pattern = document.getElementById('heroPattern');
+  if (!hero || !pattern || prefersReducedMotion) return;
+  hero.addEventListener('mousemove', (e) => {
+    const rect = hero.getBoundingClientRect();
+    const nx = (e.clientX - rect.left) / rect.width - 0.5;
+    const ny = (e.clientY - rect.top) / rect.height - 0.5;
+    pattern.style.transform = `translate(${nx * -14}px, ${ny * -14}px)`;
+  });
+  hero.addEventListener('mouseleave', () => {
+    pattern.style.transform = 'translate(0, 0)';
+  });
+})();
+
+/* Process steps: draw the connecting line once the track is in view */
+(function processLine() {
+  const track = document.getElementById('processTrack');
+  if (!track) return;
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        track.classList.add('in-view');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.4 });
+  io.observe(track);
+})();
+
+/* Cursor spotlight on cards: atmosfer items, contact card, quote form */
+(function spotlightCards() {
+  document.querySelectorAll('.spotlight').forEach((card) => {
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      card.style.setProperty('--mx', `${e.clientX - rect.left}px`);
+      card.style.setProperty('--my', `${e.clientY - rect.top}px`);
+    });
+  });
+})();
 
 /* ==========================================================
    MENÜ VERİSİ
@@ -101,6 +215,15 @@ function buildItemRow(item, categoryLabel) {
   return row;
 }
 
+function crossfadeGrid(applyChange) {
+  if (prefersReducedMotion) { applyChange(); return; }
+  gridEl.classList.add('is-switching');
+  setTimeout(() => {
+    applyChange();
+    gridEl.classList.remove('is-switching');
+  }, 160);
+}
+
 function renderTabs(active) {
   tabsEl.innerHTML = '';
   categories.forEach((cat) => {
@@ -111,10 +234,11 @@ function renderTabs(active) {
     btn.setAttribute('aria-selected', cat === active ? 'true' : 'false');
     btn.innerHTML = `${cat} <span class="menu-tab-count">${MENU[cat].length}</span>`;
     btn.addEventListener('click', () => {
+      if (cat === currentCategory) return;
       currentCategory = cat;
       visibleCount = PAGE_SIZE;
       renderTabs(cat);
-      renderGrid(cat);
+      crossfadeGrid(() => renderGrid(cat));
     });
     tabsEl.appendChild(btn);
   });
@@ -179,7 +303,7 @@ function renderSearchResults(query) {
 function exitSearch() {
   resultsInfoEl.hidden = true;
   tabsEl.hidden = false;
-  renderGrid(currentCategory);
+  crossfadeGrid(() => renderGrid(currentCategory));
 }
 
 searchInput.addEventListener('input', () => {
@@ -190,7 +314,7 @@ searchInput.addEventListener('input', () => {
     return;
   }
   tabsEl.hidden = true;
-  renderSearchResults(query);
+  crossfadeGrid(() => renderSearchResults(query));
 });
 
 searchClearBtn.addEventListener('click', () => {

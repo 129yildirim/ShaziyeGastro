@@ -12,6 +12,8 @@
 </head>
 <body>
 
+<div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
 <!-- ================= HEADER ================= -->
 <header id="siteHeader">
   <div class="container">
@@ -52,7 +54,10 @@
 
 <!-- ================= HERO ================= -->
 <section class="hero" id="top">
-  <div class="hero-pattern" aria-hidden="true">
+  <div class="hero-photo" style="--img:url('assets/place2.jpg')" aria-hidden="true"></div>
+  <canvas class="ember-canvas" id="emberCanvas" aria-hidden="true"></canvas>
+
+  <div class="hero-pattern" id="heroPattern" aria-hidden="true">
     <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice">
       <defs>
         <pattern id="tiles" width="56" height="56" patternUnits="userSpaceOnUse">
@@ -64,18 +69,20 @@
     </svg>
   </div>
 
+  <div class="hero-glow" aria-hidden="true"></div>
+
   <div class="container">
     <div class="hero-content">
-      <p class="eyebrow">Antakya · Hatay</p>
-      <h1>Hatay sofrasının <em>bin yıllık</em><br>lezzeti, bugün masanızda</h1>
-      <p>Kağıt kebabından künefeye, her tabak Hatay mutfağının nesillerdir aktarılan tarifleriyle, odun ateşinde ve günlük taze malzemeyle hazırlanır.</p>
-      <div class="hero-cta">
+      <p class="eyebrow hero-in" style="--d:0">Antakya · Hatay</p>
+      <h1 class="hero-in" style="--d:1">Hatay sofrasının <em>bin yıllık</em><br>lezzeti, bugün masanızda</h1>
+      <p class="hero-in" style="--d:2">Kağıt kebabından künefeye, her tabak Hatay mutfağının nesillerdir aktarılan tarifleriyle, odun ateşinde ve günlük taze malzemeyle hazırlanır.</p>
+      <div class="hero-cta hero-in" style="--d:3">
         <a href="https://wa.me/905451234567" class="btn btn-gold" target="_blank" rel="noopener">
           WhatsApp'tan Rezervasyon
         </a>
         <a href="#menu" class="btn btn-outline">Menüyü İncele</a>
       </div>
-      <div class="hero-stats">
+      <div class="hero-stats hero-in" style="--d:4">
         <div><strong>1957'den beri</strong><span>Aile Reçeteleri</span></div>
         <div><strong>Odun Ateşi</strong><span>Geleneksel Pişirim</span></div>
         <div><strong>Günlük</strong><span>Taze Hazırlık</span></div>
@@ -118,6 +125,35 @@
   </div>
 </section>
 
+<!-- ================= SIGNATURE DISHES ================= -->
+<section class="dishes">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow">Sofradan Kareler</p>
+      <h2>Tabaktan masaya, olduğu gibi</h2>
+      <p>Menüdeki bazı lezzetlerin gerçek fotoğrafları — ocaktan çıktığı, sofraya geldiği haliyle.</p>
+    </div>
+    <div class="dishes-grid">
+      <a href="#menu" class="dish-card reveal spotlight">
+        <img src="assets/menuitem1.png" alt="Kağıt kebabı, bulgur pilavı ve közlenmiş biber ve domatesle servis edilmiş" loading="lazy" width="962" height="872">
+        <span class="dish-caption"><strong>Kağıt Kebabı</strong><em>İmza Lezzet</em></span>
+      </a>
+      <a href="#menu" class="dish-card reveal spotlight">
+        <img src="assets/menuitem5.jpg" alt="Humus, közlenmiş kırmızı biberli ekmek dilimleriyle servis edilmiş" loading="lazy" width="719" height="669">
+        <span class="dish-caption"><strong>Humus</strong><em>Başlangıç</em></span>
+      </a>
+      <a href="#menu" class="dish-card reveal spotlight">
+        <img src="assets/menuitem4.png" alt="Fıstıklı Hatay usulü künefe, sıcak servis" loading="lazy" width="795" height="680">
+        <span class="dish-caption"><strong>Künefe</strong><em>Hatay Usulü</em></span>
+      </a>
+      <a href="#menu" class="dish-card reveal spotlight">
+        <img src="assets/menuitem2.png" alt="Cevizli kaytaz böreği, hafif şerbetli" loading="lazy" width="624" height="632">
+        <span class="dish-caption"><strong>Kaytaz Böreği</strong><em>Tatlı</em></span>
+      </a>
+    </div>
+  </div>
+</section>
+
 <!-- ================= MENU ================= -->
 <section class="menu-section" id="menu">
   <div class="container">
@@ -148,23 +184,24 @@
       <p>Şaziye Gastro'da her tabak aynı düzenden geçer — tazelikten ödün vermeden, ustalık isteyen bir sırayla.</p>
     </div>
 
-    <div class="process-track">
-      <div class="process-step reveal">
+    <div class="process-track" id="processTrack">
+      <div class="process-line" aria-hidden="true"><span class="process-line-fill" id="processLineFill"></span></div>
+      <div class="process-step">
         <div class="step-num">01</div>
         <h3>Taze Seçim</h3>
         <p>Sebze, et ve baharatlar her sabah Antakya'nın pazarından taze olarak seçilir.</p>
       </div>
-      <div class="process-step reveal">
+      <div class="process-step">
         <div class="step-num">02</div>
         <h3>Usta Elinden</h3>
         <p>Hamurlar açılır, közler hazırlanır — her adım yöresel tarifin gerektirdiği sabırla ilerler.</p>
       </div>
-      <div class="process-step reveal">
+      <div class="process-step">
         <div class="step-num">03</div>
         <h3>Odun Ateşinde</h3>
         <p>Kağıt kebabı ve ızgaralar, geleneksel odun ateşinde kendi yağında pişer.</p>
       </div>
-      <div class="process-step reveal">
+      <div class="process-step">
         <div class="step-num">04</div>
         <h3>Sofraya Servis</h3>
         <p>Her tabak, fırından ya da ızgaradan çıktığı gibi sımsıcak halde masanıza gelir.</p>
@@ -183,22 +220,40 @@
     </div>
 
     <div class="atmosfer-grid">
-      <div class="atmosfer-item reveal">
-        <div class="atmosfer-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#f7e9e0" stroke-width="1.4"><path d="M3 21h18M5 21V9l7-5 7 5v12M9 21v-6h6v6"/></svg></div>
+      <div class="atmosfer-item reveal spotlight" style="background-image:url('assets/place1.png')">
+        <div class="atmosfer-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#f7e9e0" stroke-width="1.4"><path d="M3 21h18M5 21V9l7-5 7 5v12M9 21v-6h6v6"/></svg></div>
         <h4>Taş Duvarlar, Sıcak Işık</h4>
       </div>
-      <div class="atmosfer-item reveal">
-        <div class="atmosfer-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#f7e9e0" stroke-width="1.4"><path d="M12 2c3 4 6 7.5 6 11a6 6 0 1 1-12 0c0-3.5 3-7 6-11z"/></svg></div>
+      <div class="atmosfer-item reveal spotlight" style="background-image:url('assets/place2.png')">
+        <div class="atmosfer-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#f7e9e0" stroke-width="1.4"><path d="M12 2c3 4 6 7.5 6 11a6 6 0 1 1-12 0c0-3.5 3-7 6-11z"/></svg></div>
         <h4>Odun Ateşi Ocak Başı</h4>
       </div>
-      <div class="atmosfer-item reveal">
-        <div class="atmosfer-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#f7e9e0" stroke-width="1.4"><path d="M4 6h16M4 6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2M4 6l3-4h10l3 4"/></svg></div>
+      <div class="atmosfer-item reveal spotlight" style="background-image:url('assets/place3.png');background-position:left center;">
+        <div class="atmosfer-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#f7e9e0" stroke-width="1.4"><path d="M4 6h16M4 6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2M4 6l3-4h10l3 4"/></svg></div>
         <h4>Geniş Aile Salonu</h4>
       </div>
-      <div class="atmosfer-item reveal">
-        <div class="atmosfer-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#f7e9e0" stroke-width="1.4"><path d="M12 3v2M5.6 5.6l1.4 1.4M3 12h2M5.6 18.4l1.4-1.4M12 19v2M17 17l1.4 1.4M19 12h2M17 7l1.4-1.4"/><circle cx="12" cy="12" r="4"/></svg></div>
+      <div class="atmosfer-item reveal spotlight" style="background-image:url('assets/place3.png');background-position:right center;">
+        <div class="atmosfer-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#f7e9e0" stroke-width="1.4"><path d="M12 3v2M5.6 5.6l1.4 1.4M3 12h2M5.6 18.4l1.4-1.4M12 19v2M17 17l1.4 1.4M19 12h2M17 7l1.4-1.4"/><circle cx="12" cy="12" r="4"/></svg></div>
         <h4>Yaz Bahçesi Terası</h4>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SNAPSHOTS MOSAIC ================= -->
+<section class="snapshots">
+  <div class="container">
+    <div class="snapshots-head reveal">
+      <p class="eyebrow">Anlık Kareler</p>
+      <h2>Sofradan ve mekandan anlar</h2>
+    </div>
+    <div class="snapshots-grid">
+      <div class="snap-tile snap-a reveal spotlight"><img src="assets/place1.jpg" alt="Şaziye Gastro'nun sıcak ışıklı vitrini" loading="lazy" width="646" height="878"></div>
+      <div class="snap-tile snap-b reveal spotlight"><img src="assets/menuitem3.jpg" alt="Şefin özel burgeri, patates kızartmasıyla" loading="lazy" width="542" height="668"></div>
+      <div class="snap-tile snap-c reveal spotlight"><img src="assets/menuitem1.jpg" alt="Kağıt kebabı ve pilav tabağı" loading="lazy" width="962" height="872"></div>
+      <div class="snap-tile snap-d reveal spotlight"><img src="assets/place3.jpg" alt="Yaz bahçesi terasında masa keyfi" loading="lazy" width="896" height="866"></div>
+      <div class="snap-tile snap-e reveal spotlight"><img src="assets/menuitem4.jpg" alt="Sıcak künefe servisi" loading="lazy" width="795" height="680"></div>
+      <div class="snap-tile snap-f reveal spotlight"><img src="assets/place2.jpg" alt="Odun ateşi ocak başı köşesi" loading="lazy" width="722" height="874"></div>
     </div>
   </div>
 </section>
@@ -217,7 +272,7 @@
 <!-- ================= CONTACT ================= -->
 <section class="contact" id="iletisim">
   <div class="container">
-    <div class="contact-card reveal">
+    <div class="contact-card reveal spotlight">
       <h3>Bize Ulaşın</h3>
 
       <div class="contact-row">
@@ -247,7 +302,7 @@
       </div>
     </div>
 
-    <div class="form-wrap reveal">
+    <div class="form-wrap reveal spotlight">
       <h3>Rezervasyon Formu</h3>
       <p>Bilgilerinizi bırakın, talebiniz WhatsApp üzerinden ekibimize iletilsin.</p>
       <form id="quoteForm">
@@ -334,6 +389,7 @@
 </footer>
 
 <a class="wa-float" href="https://wa.me/905451234567" target="_blank" rel="noopener" aria-label="WhatsApp'tan yazın">
+  <span class="wa-float-ring" aria-hidden="true"></span>
   <svg width="30" height="30" viewBox="0 0 24 24" fill="#fff"><path d="M17.5 14.4c-.3-.1-1.7-.8-1.9-.9-.3-.1-.5-.1-.6.1-.2.3-.7.9-.9 1-.1.2-.3.2-.6.1-.3-.2-1.2-.5-2.4-1.5-.9-.8-1.5-1.8-1.6-2.1-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.1.2-.3.3-.4.1-.2 0-.4 0-.5C10.2 9 9.7 7.6 9.5 7c-.2-.5-.4-.5-.6-.5h-.5c-.2 0-.5.1-.7.3-.3.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2 3 4.8 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.7-.7 1.9-1.3.2-.7.2-1.2.2-1.3-.1-.1-.3-.2-.6-.3z"/><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.5-1.2l-.3-.2-3.1.8.8-3-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg>
 </a>
 
