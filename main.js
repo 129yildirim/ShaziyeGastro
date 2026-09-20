@@ -243,24 +243,42 @@ const MENU = {
 ]
 };
 
+const tabsCarouselEl = document.getElementById('menuTabsCarousel');
 const tabsEl = document.getElementById('menuTabs');
+const tabPrevBtn = document.getElementById('menuTabPrev');
+const tabNextBtn = document.getElementById('menuTabNext');
+const categoryNoteEl = document.getElementById('menuCategoryNote');
 const gridEl = document.getElementById('menuGrid');
 const searchInput = document.getElementById('menuSearch');
 const searchClearBtn = document.getElementById('menuSearchClear');
 const resultsInfoEl = document.getElementById('menuResultsInfo');
 const categories = Object.keys(MENU);
+const categoryCount = categories.length;
 
 /* Menü büyüdükçe (ör. 100+ ürün) sayfayı kullanışlı tutmak için:
    1) Kategori başına bir seferde sınırlı sayıda ürün gösterilir,
       "Daha Fazla Göster" ile devamı yüklenir.
    2) Üstteki arama kutusu tüm kategorilerde anında filtreler.
-   Yeni ürün eklemek hâlâ sadece MENU nesnesine satır eklemek kadar basit. */
+   3) Kategori sekmeleri bir karusel: her zaman 3 tanesi görünür
+      (önceki / seçili / sonraki), oklarla ya da sağa-sola kaydırarak
+      gezinilir. Yeni ürün eklemek hâlâ sadece MENU nesnesine satır
+      eklemek kadar basit. */
 const PAGE_SIZE = 8;
-let currentCategory = categories[0];
+let activeIndex = 0;
 let visibleCount = PAGE_SIZE;
 
 function normalize(str) {
   return str.toLocaleLowerCase('tr-TR');
+}
+
+// "ANA YEMEKLER (min. 200gr...)" -> kısa sekme etiketi "ANA YEMEKLER"
+function shortLabel(cat) {
+  return cat.split(' (')[0];
+}
+// Parantez içindeki notu ayıklar, varsa aktif kategori altında gösterilir
+function categoryNote(cat) {
+  const m = cat.match(/\(([^)]+)\)/);
+  return m ? m[1] : '';
 }
 
 function buildItemRow(item, categoryLabel) {
@@ -286,25 +304,82 @@ function crossfadeGrid(applyChange) {
   }, 160);
 }
 
-function renderTabs(active) {
+function updateCategoryNote() {
+  const note = categoryNote(categories[activeIndex]);
+  if (note) {
+    categoryNoteEl.textContent = note;
+    categoryNoteEl.hidden = false;
+  } else {
+    categoryNoteEl.hidden = true;
+  }
+}
+
+function renderTabs(direction) {
   tabsEl.innerHTML = '';
-  categories.forEach((cat) => {
+  const prevI = (activeIndex - 1 + categoryCount) % categoryCount;
+  const nextI = (activeIndex + 1) % categoryCount;
+  const slots = categoryCount > 2
+    ? [{ i: prevI, role: 'prev' }, { i: activeIndex, role: 'active' }, { i: nextI, role: 'next' }]
+    : [{ i: activeIndex, role: 'active' }];
+
+  slots.forEach(({ i, role }) => {
+    const cat = categories[i];
     const btn = document.createElement('button');
-    btn.className = 'menu-tab';
     btn.type = 'button';
+    btn.className = `menu-tab menu-tab--${role}`;
     btn.setAttribute('role', 'tab');
-    btn.setAttribute('aria-selected', cat === active ? 'true' : 'false');
-    btn.innerHTML = `${cat} <span class="menu-tab-count">${MENU[cat].length}</span>`;
-    btn.addEventListener('click', () => {
-      if (cat === currentCategory) return;
-      currentCategory = cat;
-      visibleCount = PAGE_SIZE;
-      renderTabs(cat);
-      crossfadeGrid(() => renderGrid(cat));
-    });
+    btn.setAttribute('aria-selected', role === 'active' ? 'true' : 'false');
+    btn.innerHTML = role === 'active'
+      ? `${shortLabel(cat)} <span class="menu-tab-count">${MENU[cat].length}</span>`
+      : shortLabel(cat);
+    if (role !== 'active') {
+      btn.addEventListener('click', () => goToCategory(i));
+    }
     tabsEl.appendChild(btn);
   });
+
+  updateCategoryNote();
+
+  if (direction && !prefersReducedMotion) {
+    tabsEl.classList.remove('slide-left', 'slide-right');
+    void tabsEl.offsetWidth; // reflow, so the animation can restart
+    tabsEl.classList.add(direction === 'next' ? 'slide-left' : 'slide-right');
+  }
 }
+
+function goToCategory(index, forcedDirection) {
+  const target = ((index % categoryCount) + categoryCount) % categoryCount;
+  if (target === activeIndex) return;
+  const direction = forcedDirection || (((target - activeIndex + categoryCount) % categoryCount) === 1 ? 'next' : 'prev');
+  activeIndex = target;
+  visibleCount = PAGE_SIZE;
+  renderTabs(direction);
+  crossfadeGrid(() => renderGrid(categories[activeIndex]));
+}
+
+tabPrevBtn.addEventListener('click', () => goToCategory(activeIndex - 1, 'prev'));
+tabNextBtn.addEventListener('click', () => goToCategory(activeIndex + 1, 'next'));
+if (categoryCount <= 1) { tabPrevBtn.hidden = true; tabNextBtn.hidden = true; }
+
+/* Swipe left/right on the tab strip or the grid itself to change category */
+(function swipeCategories() {
+  let startX = 0, startY = 0, tracking = false;
+  function onStart(x, y) { startX = x; startY = y; tracking = true; }
+  function onEnd(x, y) {
+    if (!tracking) return;
+    tracking = false;
+    const dx = x - startX;
+    const dy = y - startY;
+    if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.2) {
+      if (dx < 0) goToCategory(activeIndex + 1, 'next');
+      else goToCategory(activeIndex - 1, 'prev');
+    }
+  }
+  [tabsCarouselEl, gridEl].forEach((el) => {
+    el.addEventListener('touchstart', (e) => onStart(e.touches[0].clientX, e.touches[0].clientY), { passive: true });
+    el.addEventListener('touchend', (e) => onEnd(e.changedTouches[0].clientX, e.changedTouches[0].clientY), { passive: true });
+  });
+})();
 
 function renderGrid(cat) {
   gridEl.innerHTML = '';
@@ -364,8 +439,9 @@ function renderSearchResults(query) {
 
 function exitSearch() {
   resultsInfoEl.hidden = true;
-  tabsEl.hidden = false;
-  crossfadeGrid(() => renderGrid(currentCategory));
+  tabsCarouselEl.hidden = false;
+  categoryNoteEl.hidden = !categoryNote(categories[activeIndex]);
+  crossfadeGrid(() => renderGrid(categories[activeIndex]));
 }
 
 searchInput.addEventListener('input', () => {
@@ -375,7 +451,8 @@ searchInput.addEventListener('input', () => {
     exitSearch();
     return;
   }
-  tabsEl.hidden = true;
+  tabsCarouselEl.hidden = true;
+  categoryNoteEl.hidden = true;
   crossfadeGrid(() => renderSearchResults(query));
 });
 
@@ -387,8 +464,8 @@ searchClearBtn.addEventListener('click', () => {
 });
 
 if (categories.length) {
-  renderTabs(currentCategory);
-  renderGrid(currentCategory);
+  renderTabs();
+  renderGrid(categories[activeIndex]);
 }
 
 /* ==========================================================
