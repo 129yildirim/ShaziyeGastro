@@ -286,6 +286,7 @@ header#siteHeader.scrolled .menu-toggle span { background: var(--ink); }
 --------------------------------------------- */
 .trust { background: var(--ink); padding: 20px 0 70px; }
 .trust-grid {
+  padding-top: 20px;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 24px;
@@ -505,7 +506,7 @@ header#siteHeader.scrolled .menu-toggle span { background: var(--ink); }
 .process-track { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; position: relative; }
 .process-line {
   position: absolute;
-  top: 22px;
+  top: 12px;
   left: calc(12.5% + 4px);
   right: calc(12.5% + 4px);
   height: 2px;

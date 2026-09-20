@@ -153,32 +153,94 @@ document.getElementById('year').textContent = new Date().getFullYear();
    eklemeniz yeterli — sekmeler ve liste otomatik güncellenir.
    ========================================================== */
 const MENU = {
-  "Mezeler & Başlangıçlar": [
-    { name: "Humus", desc: "Nohut ezmesi, tahin, zeytinyağı, közlenmiş kırmızı biber.", price: "₺140" },
-    { name: "Muhammara", desc: "Ceviz ve kırmızı biber ezmesi, nar ekşisi.", price: "₺160" },
-    { name: "Oruk", desc: "İçli köftenin Hatay usulü fırınlanmış hali, bulgur ve kıyma iç harcı.", price: "₺190" },
-    { name: "Sinsi Böreği", desc: "İnce yufka katmanları arasında kıymalı iç harç, yoğurtla servis.", price: "₺180" }
-  ],
-  "Kebaplar & Izgara": [
-    { name: "Kağıt Kebabı", desc: "Kıyma, domates ve biber ile kağıtta fırınlanan Hatay'ın imza kebabı.", price: "₺380" },
-    { name: "Humuslu Kebap", desc: "Izgara kebap dilimleri, sıcak humus üzerinde, tereyağıyla.", price: "₺400" },
-    { name: "Tepsi Kebabı", desc: "Patlıcan ve biberle fırınlanan kıyma kebabı.", price: "₺360" },
-    { name: "Şiş Tavuk", desc: "Marine edilmiş tavuk şiş, sumak soğanla.", price: "₺320" }
-  ],
-  "Çorbalar": [
-    { name: "Yuvalama", desc: "Yoğurtlu çorba, bulgurla sarılmış küçük köfteler, nane ve tereyağı.", price: "₺120" },
-    { name: "Mercimek Çorbası", desc: "Kırmızı mercimek, kimyon, limon.", price: "₺100" }
-  ],
-  "Tatlılar": [
-    { name: "Künefe", desc: "Tel kadayıf arasında eritilmiş peynir, sıcak şerbetle, Hatay usulü.", price: "₺190" },
-    { name: "Kaytaz Böreği", desc: "İnce yufka, ceviz iç harcı, hafif şerbetli Hatay tatlısı.", price: "₺170" },
-    { name: "Ekmek Kadayıfı", desc: "Kaymak eşliğinde, hafif şerbetli geleneksel tatlı.", price: "₺160" }
-  ],
-  "İçecekler": [
-    { name: "Antakya Usulü Limonata", desc: "Taze sıkılmış limon, nane.", price: "₺80" },
-    { name: "Ayran", desc: "Soğuk, tuzlu yoğurt içeceği.", price: "₺50" },
-    { name: "Türk Kahvesi", desc: "Közde pişirilmiş, geleneksel usul.", price: "₺70" }
-  ]
+"MEZELER": [
+{ "name": "HUMUS", "desc": "Tahin, nohut ve sızma zeytinyağının ipeksi uyumu.", "price": "180₺" },
+{ "name": "MUHAMMARA", "desc": "Bolceviz, tahin, biber salçası ve baharatın lezzet harmanı.", "price": "240₺" },
+{ "name": "MÜTEBBEL", "desc": "Közlenmiş patlıcan, süzme yoğurt, sarımsak, dere otu ve tahinin eşsiz uyumu.", "price": "220₺" },
+{ "name": "HAVUÇ TARATOR", "desc": "Hafifçe sotelenmiş taze havuçlar, süzme yoğurt, ve sarımsak.", "price": "160₺" },
+{ "name": "CEVİZLİ ZEYTİN KAVURMA", "desc": "Antakya halhalı zeytini, bol ceviz, domates sosu ve sızma zeytinyağı.", "price": "350₺" },
+{ "name": "BABAGANNUŞ KÖZLENMİŞ PATLICAN", "desc": "Köz biber, köz patlıcan, taze sarımsak, sızma zeytinyağı ve nar ekşisi.", "price": "200₺" },
+{ "name": "ZEYTİNYAĞLI YAPRAK SARMA", "desc": "İncecik asma yaprağına sarılmış, bol baharatlı zeytinyağlı sarma. (6 adettir)", "price": "225₺" },
+{ "name": "ZEYTİNYAĞLI BİBER DOLMASI", "desc": "Taze baharatlı pirinç harcıyla doldurulmuş biber dolması. (2 adettir)", "price": "250₺" },
+{ "name": "ANTAKYA USULÜ KISIR", "desc": "Bol yeşillik, taze nane, nar ekşisi ve esmer bulgurla geleneksel dokunuş.", "price": "200₺" },
+{ "name": "YORGİ", "desc": "Süzme yoğurt yatağında, özel baharatlı karamelize soğanlar.", "price": "260₺" },
+{ "name": "TAVUKLU KEREVİZLİ YOĞURT SALATASI", "desc": "Rendelenmiş taze kereviz, tiftiklenmiş tavuk göğsü ve ceviz içi.", "price": "300₺" },
+{ "name": "HATAY TUZLU YOĞURT", "desc": "Yoğurdun kaynatılarak özüne ulaşması ile elde edilen yoğun lezzet.", "price": "150₺" },
+{ "name": "EV YAPIMI TURŞU 1 KG", "desc": "Mevsim sebzelerinden hazırlanan çıtır ve iştah açıcı karışık turşu.", "price": "300₺" },
+{ "name": "VİŞNELİ YAPRAK SARMA", "desc": "Ekşi vişne dokunuşuyla klasik yaprak sarmaya farklı bir yorum. (8 adettir)", "price": "375₺" }
+],
+"BAŞLANGIÇ & ÇORBALAR": [
+{ "name": "KÖZ BİBER ÇORBASI", "desc": "Közlenmiş kırmızı biberlerle yapılan bize özel imza lezzet.", "price": "225₺" },
+{ "name": "KELLE PAÇA ÇORBASI", "desc": "Geleneksel usulle hazırlanan, bol sarımsaklı ve sirkeli şifa çorbası.", "price": "250₺" },
+{ "name": "ANTEP USULÜ KURU BİBER DOLMASI", "desc": "Ekşili ve baharatlı pirinç harcıyla doldurulmuş kuru biber dolması.", "price": "160₺" },
+{ "name": "ANTEP USULÜ KURU PATLICAN DOLMASI", "desc": "Zeytinyağlı, bol baharatlı ve nar ekşili geleneksel kuru patlıcan dolması.", "price": "180₺" }
+],
+"ARA SICAKLAR": [
+{ "name": "İÇLİ KÖFTE (KIZARTMA)", "desc": "Dışı çıtır çıtır, içi sulu ve lezzetli geleneksel kızarmış içli köfte. (1 adet)", "price": "120₺" },
+{ "name": "COMBO TABAĞI", "desc": "Çıtır atıştırmalıklar, sigara böreği, patates kızartması ve özel soslar. (2 kişiliktir)", "price": "400₺" },
+{ "name": "PATATES KIZARTMASI", "desc": "Altın sarısı çıtır patatesler.", "price": "120₺" },
+{ "name": "EV YAPIMI SİGARA BÖREĞİ", "desc": "Çıtır yufka içerisinde eriyen sıcak Hatay peyniri. (6 adettir)", "price": "120₺" },
+{ "name": "BİBERLİ EKMEK", "desc": "Antakya'nın geleneksel baharatlı salça ve çökelekle harçlı meşhur lezzeti.", "price": "245₺" },
+{ "name": "FELLAH KÖFTESİ", "desc": "Sarımsaklı domates sosu ve taze maydanoz eşliğinde geleneksel bulgur köftesi.", "price": "220₺" }
+],
+"SALATALAR": [
+{ "name": "MEVSİM SALATASI", "desc": "Mevsim yeşillikleri, havuç, mor lahana, zeytinyağı ve limon sosu.", "price": "250₺" },
+{ "name": "TABLACI SALATASI", "desc": "İncecik kıyılmış domates, biber, soğan, bol sumak ve nar ekşisi.", "price": "180₺" },
+{ "name": "ÇOBAN SALATASI", "desc": "Küp doğranmış domates, salatalık, biber, taze soğan ve zeytinyağı.", "price": "220₺" },
+{ "name": "TAVUKLU IZGARA SALATA", "desc": "Akdeniz yeşillikleri üzerinde ızgara tavuk dilimleri ve özel sos.", "price": "400₺" },
+{ "name": "TON BALIKLI SALATA", "desc": "Mısır, zeytin dilimleri, kırmızı soğan ve ton balığının nefis uyumu.", "price": "350₺" },
+{ "name": "GURME 3 PEYNİRLİ SALATA", "desc": "Üç peynirli, kuru domates ve zeytinyağı.", "price": "350₺" }
+],
+"BISTRO KLASİKLERİ": [
+{ "name": "SHAZİYE BURGER", "desc": "Ev yapımı özel burger köftesi, karamelize soğan, eritilmiş peynir ile.", "price": "550₺" },
+{ "name": "TAVUK VİYANA ŞNİTZEL", "desc": "İncecik açılmış Tavuk bonfile ve patatesin uyumu.", "price": "600₺" },
+{ "name": "KREMALI TAVUKLU SPAGETTİ", "desc": "krema tavuk ve spagettinin uyumu.", "price": "375₺" }
+],
+"ANA YEMEKLER (Ana yemek porsiyonlarımızın çiğ tartımları minimum 200 gr dır.)": [
+{ "name": "HATAY KAĞIT KEBABI", "desc": "Yağlı kağıt üzerinde, fırında kendi suyuyla pişen özel zırh kebabı.", "price": "550₺" },
+{ "name": "HATAY TEPSİ KEBABI", "desc": "Özel baharatlı zırh kıyması, fırınlanmış domates ve biber ile. (2 kişilik)", "price": "1100₺" },
+{ "name": "HALEP KEBABI", "desc": "Kebap arası köz patlıcan ve kaşarın oluşturduğu eşsiz lezzet.", "price": "750₺" },
+{ "name": "ADANA KEBAP SERVİS", "desc": "Zırhtan çekilmiş el kıyması, közlenmiş biber, domates ve sumaklı soğan eşliğinde.", "price": "600₺" },
+{ "name": "SHAZIYE SERVİS KÖFTE", "desc": "Izgara köfteler, közlenmiş sebzeler ve lavaş eşliğinde.", "price": "400₺" },
+{ "name": "KUZU SAC KAVURMA", "desc": "Sac üzerinde taze biber, domates ve sarımsakla sotelenmiş yumuşacık kuzu eti.", "price": "750₺" },
+{ "name": "TAVUK SAC KAVURMA", "desc": "Baharatlar ve taze sebzelerle sacda harmanlanmış lezzetli tavuk parçaları.", "price": "400₺" },
+{ "name": "KUZU LOKUM DÖKÜM", "desc": "Döküm tavada mühürlenmiş, ağızda dağılan yumuşacık kuzu bonfile dilimleri.", "price": "900₺" },
+{ "name": "KUZU PİRZOLA", "desc": "Taze biberiye ile marine edilmiş, ızgarada pişmiş 3 parça kuzu pirzola.", "price": "950₺" },
+{ "name": "TAVUK ŞİŞ", "desc": "Özel marinasyonlu, şişe dizilmiş sulu tavuk but parçaları.", "price": "350₺" },
+{ "name": "KUZU BUT İNCİK", "desc": "Düşük ısıda uzun süre pişirilerek hazırlanan , yumuşak dokulu ve yoğun aromalı kuzu incik.", "price": "650₺" }
+],
+"DÜRÜMLERİMİZ": [
+{ "name": "TAVUK DÖNER DÜRÜM", "desc": "Özel soslu tavuk döner, patates ve turşu eşliğinde.", "price": "245₺" },
+{ "name": "ADANA KEBAP DÜRÜM", "desc": "Sıcak lavaş içerisinde Adana kebap, sumaklı soğan ile.", "price": "345₺" },
+{ "name": "NOHUT DÜRÜM", "desc": "Antep'in meşhur baharatlı, ezilmiş sıcak nohut dürümü.", "price": "250₺" },
+{ "name": "TAVUK ŞİŞ DÜRÜM", "desc": "Izgara tavuk şiş parçaları, köz sebzeler ve yeşillik ile.", "price": "250₺" },
+{ "name": "SHAZIYE GURME", "desc": "Ekmekle bütünleşmiş özel baharatlı et harcı ile pişen destansı lezzet.", "price": "450₺" },
+{ "name": "KAVURMA DÜRÜM", "desc": "Ağır ateşte pişmiş kavrulmuş etin lavaşla muhteşem buluşması.", "price": "400₺" },
+{ "name": "KAHVALTI DÜRÜMÜ", "desc": "Peynir, domates, zeytin ezmesi ve taze otlarla hafif bir alternatif.", "price": "200₺" },
+{ "name": "EKSTRA KAŞAR", "desc": "", "price": "45₺" }
+],
+"YANCILAR & EKSTRALAR": [
+{ "name": "PİRİNÇ PİLAVI", "desc": "", "price": "150₺" },
+{ "name": "BULGUR PİLAVI", "desc": "", "price": "100₺" },
+{ "name": "EKSTRA LAVAŞ", "desc": "", "price": "25₺" }
+],
+"TATLILAR": [
+{ "name": "KÜNEFE", "desc": "", "price": "250₺" },
+{ "name": "ÇITIR KABAK", "desc": "", "price": "250₺" }
+],
+"İÇECEKLER": [
+{ "name": "HARDALİYE", "desc": "", "price": "380₺" },
+{ "name": "HİBİSKUS", "desc": "", "price": "180₺" },
+{ "name": "LİMON ŞERBETİ", "desc": "", "price": "180₺" },
+{ "name": "AÇIK AYRAN", "desc": "", "price": "120₺" },
+{ "name": "ŞALGAM", "desc": "", "price": "65₺" },
+{ "name": "SODA", "desc": "", "price": "65₺" },
+{ "name": "SU", "desc": "", "price": "35₺" },
+{ "name": "TÜRK KAHVESİ", "desc": "", "price": "135₺" },
+{ "name": "ÇAY", "desc": "", "price": "45₺" },
+{ "name": "GAZLI İÇECEKLER", "desc": "", "price": "85₺" },
+{ "name": "MEYVE SUYU / ICE TEA", "desc": "", "price": "75₺" }
+]
 };
 
 const tabsEl = document.getElementById('menuTabs');
