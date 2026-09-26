@@ -281,10 +281,35 @@ function categoryNote(cat) {
   return m ? m[1] : '';
 }
 
+/* GEÇİCİ GÖRSELLER
+   ----------------------------------------------------------
+   Her ürüne henüz kendi fotoğrafı atanmadığı için, deneme
+   amaçlı olarak elimizdeki mevcut görsellerden biri rastgele
+   ama sabit (isme göre) şekilde seçiliyor. İlerledikçe her
+   { name, desc, price } nesnesine bir "img": "assets/..." alanı
+   eklenerek gerçek ürün fotoğrafı verilebilir — o alan varsa
+   otomatik olarak onu kullanır. */
+const PLACEHOLDER_IMAGES = [
+  'assets/menuitem1.jpg',
+  'assets/menuitem2.jpg',
+  'assets/menuitem3.jpg',
+  'assets/menuitem4.jpg',
+  'assets/menuitem5.jpg'
+];
+function placeholderImageFor(name) {
+  let hash = 0;
+  for (let i = 0; i < name.length; i++) {
+    hash = (hash * 31 + name.charCodeAt(i)) >>> 0;
+  }
+  return PLACEHOLDER_IMAGES[hash % PLACEHOLDER_IMAGES.length];
+}
+
 function buildItemRow(item, categoryLabel) {
   const row = document.createElement('div');
   row.className = 'menu-item';
+  const imgSrc = item.img || placeholderImageFor(item.name);
   row.innerHTML = `
+    <img class="menu-item-img" src="${imgSrc}" alt="${item.name}" loading="lazy" width="72" height="72">
     <div class="menu-item-text">
       ${categoryLabel ? `<span class="menu-item-cat">${categoryLabel}</span>` : ''}
       <h3>${item.name}</h3>
@@ -483,6 +508,7 @@ form.addEventListener('submit', (e) => {
   const ad = document.getElementById('adSoyad').value.trim();
   const tel = document.getElementById('telefon').value.trim();
   const tarih = document.getElementById('tarih').value;
+  const saat = document.getElementById('saat').value;
   const kisi = document.getElementById('kisi').value;
   const mesaj = document.getElementById('mesaj').value.trim();
 
@@ -492,7 +518,7 @@ form.addEventListener('submit', (e) => {
     return;
   }
 
-  const text = `Merhaba, Şaziye Gastro'dan rezervasyon yaptırmak istiyorum.%0A%0AAd Soyad: ${encodeURIComponent(ad)}%0ATelefon: ${encodeURIComponent(tel)}%0ATarih: ${encodeURIComponent(tarih || '-')}%0AKişi Sayısı: ${encodeURIComponent(kisi || '-')}%0AMesaj: ${encodeURIComponent(mesaj || '-')}`;
+  const text = `Merhaba, Şaziye Gastro'dan rezervasyon yaptırmak istiyorum.%0A%0AAd Soyad: ${encodeURIComponent(ad)}%0ATelefon: ${encodeURIComponent(tel)}%0ATarih: ${encodeURIComponent(tarih || '-')}%0ASaat: ${encodeURIComponent(saat || '-')}%0AKişi Sayısı: ${encodeURIComponent(kisi || '-')}%0AMesaj: ${encodeURIComponent(mesaj || '-')}`;
   window.open(`https://wa.me/905451234567?text=${text}`, '_blank');
 
   status.textContent = 'Talebiniz WhatsApp\'a yönlendiriliyor...';
