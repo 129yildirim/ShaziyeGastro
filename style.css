@@ -20,7 +20,7 @@
 }
 
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
@@ -33,6 +33,7 @@ body {
   background: var(--cream-soft);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
 h1, h2, h3 {
@@ -861,8 +862,8 @@ footer { background: var(--ink); color: var(--cream); }
 --------------------------------------------- */
 .wa-float {
   position: fixed;
-  bottom: 24px;
-  right: 24px;
+  bottom: max(24px, env(safe-area-inset-bottom, 0px) + 16px);
+  right: max(24px, env(safe-area-inset-right, 0px) + 16px);
   width: 58px;
   height: 58px;
   border-radius: 50%;
@@ -871,10 +872,15 @@ footer { background: var(--ink); color: var(--cream); }
   align-items: center;
   justify-content: center;
   box-shadow: 0 8px 22px rgba(0,0,0,0.25);
-  z-index: 90;
+  z-index: 999;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  will-change: transform;
   transition: transform 0.2s ease;
 }
-.wa-float:hover { transform: scale(1.06); }
+.wa-float:hover { transform: translateZ(0) scale(1.06); }
 .wa-float-ring {
   position: absolute;
   inset: 0;
