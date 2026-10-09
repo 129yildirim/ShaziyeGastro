@@ -1,0 +1,18 @@
+backend:
+  name: github
+  repo: 129yildirim/ShaziyeGastro # GitHub deponuzun adı
+  branch: main # Çalıştığınız branch
+
+media_folder: "imagesh/menu" # Görsellerin kaydedileceği klasör
+public_folder: "/imagesh/menu"
+
+collections:
+  - name: "menu"
+    label: "Restoran Menüsü"
+    folder: "content/menu" # Menü dosyalarının tutulacağı yer
+    create: true
+    fields:
+      - {label: "Yemek Adı", name: "title", widget: "string"}
+      - {label: "Açıklama", name: "description", widget: "text"}
+      - {label: "Fiyat", name: "price", widget: "string"}
+      - {label: "Fotoğraf", name: "image", widget: "image"}
