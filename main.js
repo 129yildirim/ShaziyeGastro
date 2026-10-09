@@ -3,11 +3,19 @@ const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)
 // Header scroll state + scroll progress bar
 const header = document.getElementById('siteHeader');
 const scrollProgress = document.getElementById('scrollProgress');
-window.addEventListener('scroll', () => {
+let scrollTicking = false;
+function updateOnScroll() {
   header.classList.toggle('scrolled', window.scrollY > 40);
   const max = document.documentElement.scrollHeight - window.innerHeight;
   const pct = max > 0 ? (window.scrollY / max) * 100 : 0;
   if (scrollProgress) scrollProgress.style.width = pct + '%';
+  scrollTicking = false;
+}
+window.addEventListener('scroll', () => {
+  if (!scrollTicking) {
+    requestAnimationFrame(updateOnScroll);
+    scrollTicking = true;
+  }
 }, { passive: true });
 
 // Mobile nav

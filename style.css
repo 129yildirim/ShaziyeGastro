@@ -144,6 +144,11 @@ header#siteHeader {
   top: 0;
   z-index: 100;
   background: transparent;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  will-change: background-color;
   transition: background-color 0.25s ease, box-shadow 0.25s ease;
 }
 header#siteHeader .container { display: flex; align-items: center; justify-content: space-between; height: 84px; }
