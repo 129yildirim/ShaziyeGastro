@@ -317,7 +317,9 @@ function buildItemRow(item, categoryLabel) {
   row.className = 'menu-item';
   const imgSrc = item.img || placeholderImageFor(item.name);
   row.innerHTML = `
-    <img class="menu-item-img" src="${imgSrc}" alt="${item.name}" loading="lazy" width="72" height="72">
+    
+    <!--      <img class="menu-item-img" src="${imgSrc}" alt="${item.name}" loading="lazy" width="72" height="72">     -->
+    
     <div class="menu-item-text">
       ${categoryLabel ? `<span class="menu-item-cat">${categoryLabel}</span>` : ''}
       <h3>${item.name}</h3>
