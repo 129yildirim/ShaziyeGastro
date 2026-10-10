@@ -45,88 +45,6 @@ revealEls.forEach(el => io.observe(el));
 // Footer year
 document.getElementById('year').textContent = new Date().getFullYear();
 
-/* ==========================================================
-   Hero embers — a lightweight canvas particle drift, tying
-   the "odun ateşi" (wood-fire) motif into the hero itself.
-   ========================================================== */
-(function heroEmbers() {
-  const canvas = document.getElementById('emberCanvas');
-  if (!canvas || prefersReducedMotion) return;
-  const ctx = canvas.getContext('2d');
-  const hero = canvas.closest('.hero');
-  let w, h, particles, rafId;
-
-  function resize() {
-    w = canvas.width = hero.clientWidth;
-    h = canvas.height = hero.clientHeight;
-  }
-
-  function makeParticle() {
-    return {
-      x: Math.random() * w,
-      y: h + Math.random() * 60,
-      r: 1 + Math.random() * 2.2,
-      speed: 0.35 + Math.random() * 0.7,
-      drift: (Math.random() - 0.5) * 0.6,
-      flicker: Math.random() * Math.PI * 2,
-      hue: Math.random() > 0.5 ? '201,160,74' : '224,122,58'
-    };
-  }
-
-  function init() {
-    resize();
-    const count = Math.max(18, Math.min(42, Math.floor(w / 28)));
-    particles = Array.from({ length: count }, () => {
-      const p = makeParticle();
-      p.y = Math.random() * h; // stagger initial heights
-      return p;
-    });
-  }
-
-  function step() {
-    ctx.clearRect(0, 0, w, h);
-    particles.forEach((p) => {
-      p.y -= p.speed;
-      p.x += p.drift + Math.sin(p.flicker) * 0.15;
-      p.flicker += 0.05;
-      if (p.y < -10) {
-        Object.assign(p, makeParticle());
-        p.y = h + 10;
-      }
-      const alpha = Math.min(1, (h - p.y) / h) * 0.8 * (0.5 + 0.5 * Math.sin(p.flicker));
-      ctx.beginPath();
-      ctx.fillStyle = `rgba(${p.hue}, ${Math.max(0.08, alpha)})`;
-      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      ctx.fill();
-    });
-    rafId = requestAnimationFrame(step);
-  }
-
-  init();
-  step();
-  window.addEventListener('resize', () => {
-    cancelAnimationFrame(rafId);
-    init();
-    step();
-  });
-})();
-
-/* Hero mosaic pattern parallax on mouse move */
-(function heroParallax() {
-  const hero = document.querySelector('.hero');
-  const pattern = document.getElementById('heroPattern');
-  if (!hero || !pattern || prefersReducedMotion) return;
-  hero.addEventListener('mousemove', (e) => {
-    const rect = hero.getBoundingClientRect();
-    const nx = (e.clientX - rect.left) / rect.width - 0.5;
-    const ny = (e.clientY - rect.top) / rect.height - 0.5;
-    pattern.style.transform = `translate(${nx * -14}px, ${ny * -14}px)`;
-  });
-  hero.addEventListener('mouseleave', () => {
-    pattern.style.transform = 'translate(0, 0)';
-  });
-})();
-
 /* Process steps: draw the connecting line once the track is in view */
 (function processLine() {
   const track = document.getElementById('processTrack');
@@ -142,7 +60,7 @@ document.getElementById('year').textContent = new Date().getFullYear();
   io.observe(track);
 })();
 
-/* Cursor spotlight on cards: atmosfer items, contact card, quote form */
+/* Cursor spotlight on cards: contact card, reservation form */
 (function spotlightCards() {
   document.querySelectorAll('.spotlight').forEach((card) => {
     card.addEventListener('mousemove', (e) => {
@@ -150,6 +68,76 @@ document.getElementById('year').textContent = new Date().getFullYear();
       card.style.setProperty('--mx', `${e.clientX - rect.left}px`);
       card.style.setProperty('--my', `${e.clientY - rect.top}px`);
     });
+  });
+})();
+
+/* ==========================================================
+   Signature plates: pick a row -> the arch photo swaps
+   ========================================================== */
+(function signaturePlates() {
+  const rows = document.querySelectorAll('.sig-row');
+  const img = document.getElementById('sigImg');
+  const float = document.getElementById('sigFloat');
+  if (!rows.length || !img) return;
+  let current = rows[0];
+  let swapTimer;
+
+  function show(row) {
+    if (row === current) return;
+    current = row;
+    rows.forEach((r) => r.classList.toggle('is-active', r === row));
+    clearTimeout(swapTimer);
+    img.classList.add('is-swapping');
+    swapTimer = setTimeout(() => {
+      img.onload = () => img.classList.remove('is-swapping');
+      img.src = row.dataset.img;
+      img.alt = row.dataset.alt;
+      if (float) float.textContent = row.dataset.title;
+      setTimeout(() => img.classList.remove('is-swapping'), 600); // safety net
+    }, 180);
+  }
+
+  const canHover = window.matchMedia('(hover: hover)').matches;
+  rows.forEach((row) => {
+    row.addEventListener('click', () => show(row));
+    row.addEventListener('focus', () => show(row));
+    if (canHover) row.addEventListener('mouseenter', () => show(row));
+  });
+})();
+
+/* ==========================================================
+   Venue rail: arrow buttons + mouse drag to scroll
+   ========================================================== */
+(function venueRail() {
+  const rail = document.getElementById('rail');
+  const prev = document.getElementById('railPrev');
+  const next = document.getElementById('railNext');
+  if (!rail) return;
+
+  function step() {
+    const card = rail.querySelector('.rail-card');
+    return card ? card.getBoundingClientRect().width + 24 : 320;
+  }
+  const behavior = prefersReducedMotion ? 'auto' : 'smooth';
+  if (prev) prev.addEventListener('click', () => rail.scrollBy({ left: -step(), behavior }));
+  if (next) next.addEventListener('click', () => rail.scrollBy({ left: step(), behavior }));
+
+  let down = false, startX = 0, startLeft = 0;
+  rail.addEventListener('pointerdown', (e) => {
+    if (e.pointerType !== 'mouse') return; // touch scrolls natively
+    down = true;
+    startX = e.clientX;
+    startLeft = rail.scrollLeft;
+    rail.classList.add('is-dragging');
+  });
+  window.addEventListener('pointermove', (e) => {
+    if (!down) return;
+    rail.scrollLeft = startLeft - (e.clientX - startX);
+  });
+  window.addEventListener('pointerup', () => {
+    if (!down) return;
+    down = false;
+    rail.classList.remove('is-dragging');
   });
 })();
 
@@ -317,9 +305,7 @@ function buildItemRow(item, categoryLabel) {
   row.className = 'menu-item';
   const imgSrc = item.img || placeholderImageFor(item.name);
   row.innerHTML = `
-    
-    <!--      <img class="menu-item-img" src="${imgSrc}" alt="${item.name}" loading="lazy" width="72" height="72">     -->
-    
+    <img class="menu-item-img" src="${imgSrc}" alt="${item.name}" loading="lazy" width="72" height="72">
     <div class="menu-item-text">
       ${categoryLabel ? `<span class="menu-item-cat">${categoryLabel}</span>` : ''}
       <h3>${item.name}</h3>
