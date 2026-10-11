@@ -1,0 +1,12 @@
+{
+  "items": [
+    {
+      "name": "Örnek Yemek degisti",
+      "description": "Örnek yemek açıklaması degsti",
+      "price": "331",
+      "image": "/imagesh/menu/file.jpeg",
+      "category": "Ana Yemekler",
+      "available": true
+    }
+  ]
+}

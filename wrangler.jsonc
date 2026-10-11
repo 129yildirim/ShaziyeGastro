@@ -1,0 +1,9 @@
+{
+  "$schema": "https://developers.cloudflare.com/workers/wrangler/config-schema.json",
+  "name": "shaziyegastro",
+  "compatibility_date": "2026-10-10",
+  "assets": {
+    "directory": "./"
+  },
+  "previews": {}
+}

@@ -3,12 +3,4 @@
     <url>
         <loc>https://shaziyegastro.com/</loc>
     </url>
-    <!-- Varsa diğer sayfalarınızı buraya ekleyebilirsiniz, örneğin:
-    <url>
-        <loc>https://siteniz.com/hakkinda.html</loc>
-        <lastmod>2026-10-10</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    -->
 </urlset>
