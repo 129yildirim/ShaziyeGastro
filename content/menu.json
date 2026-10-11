@@ -1,11 +1,11 @@
 {
   "items": [
     {
-      "name": "Örnek Yemek",
-      "description": "Örnek yemek açıklaması",
-      "price": "250 TL",
-      "image": "/imagesh/menu/ornek-yemek.jpg",
-      "category": "Ana Yemek",
+      "name": "Örnek Yemek degisti",
+      "description": "Örnek yemek açıklaması degsti",
+      "price": "331",
+      "image": "/imagesh/menu/file.jpeg",
+      "category": "Ana Yemekler",
       "available": true
     }
   ]
