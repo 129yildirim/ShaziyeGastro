@@ -1,11 +1,548 @@
+
 {
   "items": [
     {
-      "name": "Örnek Yemek degisti",
-      "description": "Örnek yemek açıklaması degsti",
-      "price": "331",
-      "image": "/imagesh/menu/file.jpeg",
-      "category": "Ana Yemekler",
+      "name": "HUMUS",
+      "description": "Tahin, nohut ve sızma zeytinyağının ipeksi uyumu.",
+      "price": "180",
+      "image": "",
+      "category": "MEZELER",
+      "available": true
+    },
+    {
+      "name": "MUHAMMARA",
+      "description": "Bolceviz, tahin, biber salçası ve baharatın lezzet harmanı.",
+      "price": "240",
+      "image": "",
+      "category": "MEZELER",
+      "available": true
+    },
+    {
+      "name": "MÜTEBBEL",
+      "description": "Közlenmiş patlıcan, süzme yoğurt, sarımsak, dere otu ve tahinin eşsiz uyumu.",
+      "price": "220",
+      "image": "",
+      "category": "MEZELER",
+      "available": true
+    },
+    {
+      "name": "HAVUÇ TARATOR",
+      "description": "Hafifçe sotelenmiş taze havuçlar, süzme yoğurt, ve sarımsak.",
+      "price": "160",
+      "image": "",
+      "category": "MEZELER",
+      "available": true
+    },
+    {
+      "name": "CEVİZLİ ZEYTİN KAVURMA",
+      "description": "Antakya halhalı zeytini, bol ceviz, domates sosu ve sızma zeytinyağı.",
+      "price": "350",
+      "image": "",
+      "category": "MEZELER",
+      "available": true
+    },
+    {
+      "name": "BABAGANNUŞ KÖZLENMİŞ PATLICAN",
+      "description": "Köz biber, köz patlıcan, taze sarımsak, sızma zeytinyağı ve nar ekşisi.",
+      "price": "200",
+      "image": "",
+      "category": "MEZELER",
+      "available": true
+    },
+    {
+      "name": "ZEYTİNYAĞLI YAPRAK SARMA",
+      "description": "İncecik asma yaprağına sarılmış, bol baharatlı zeytinyağlı sarma. (6 adettir)",
+      "price": "225",
+      "image": "",
+      "category": "MEZELER",
+      "available": true
+    },
+    {
+      "name": "ZEYTİNYAĞLI BİBER DOLMASI",
+      "description": "Taze baharatlı pirinç harcıyla doldurulmuş biber dolması. (2 adettir)",
+      "price": "250",
+      "image": "",
+      "category": "MEZELER",
+      "available": true
+    },
+    {
+      "name": "ANTAKYA USULÜ KISIR",
+      "description": "Bol yeşillik, taze nane, nar ekşisi ve esmer bulgurla geleneksel dokunuş.",
+      "price": "200",
+      "image": "",
+      "category": "MEZELER",
+      "available": true
+    },
+    {
+      "name": "YORGİ",
+      "description": "Süzme yoğurt yatağında, özel baharatlı karamelize soğanlar.",
+      "price": "260",
+      "image": "",
+      "category": "MEZELER",
+      "available": true
+    },
+    {
+      "name": "TAVUKLU KEREVİZLİ YOĞURT SALATASI",
+      "description": "Rendelenmiş taze kereviz, tiftiklenmiş tavuk göğsü ve ceviz içi.",
+      "price": "300",
+      "image": "",
+      "category": "MEZELER",
+      "available": true
+    },
+    {
+      "name": "HATAY TUZLU YOĞURT",
+      "description": "Yoğurdun kaynatılarak özüne ulaşması ile elde edilen yoğun lezzet.",
+      "price": "150",
+      "image": "",
+      "category": "MEZELER",
+      "available": true
+    },
+    {
+      "name": "EV YAPIMI TURŞU 1 KG",
+      "description": "Mevsim sebzelerinden hazırlanan çıtır ve iştah açıcı karışık turşu.",
+      "price": "300",
+      "image": "",
+      "category": "MEZELER",
+      "available": true
+    },
+    {
+      "name": "VİŞNELİ YAPRAK SARMA",
+      "description": "Ekşi vişne dokunuşuyla klasik yaprak sarmaya farklı bir yorum. (8 adettir)",
+      "price": "375",
+      "image": "",
+      "category": "MEZELER",
+      "available": true
+    },
+    {
+      "name": "KÖZ BİBER ÇORBASI",
+      "description": "Közlenmiş kırmızı biberlerle yapılan bize özel imza lezzet.",
+      "price": "225",
+      "image": "",
+      "category": "BAŞLANGIÇ & ÇORBALAR",
+      "available": true
+    },
+    {
+      "name": "KELLE PAÇA ÇORBASI",
+      "description": "Geleneksel usulle hazırlanan, bol sarımsaklı ve sirkeli şifa çorbası.",
+      "price": "250",
+      "image": "",
+      "category": "BAŞLANGIÇ & ÇORBALAR",
+      "available": true
+    },
+    {
+      "name": "ANTEP USULÜ KURU BİBER DOLMASI",
+      "description": "Ekşili ve baharatlı pirinç harcıyla doldurulmuş kuru biber dolması.",
+      "price": "160",
+      "image": "",
+      "category": "BAŞLANGIÇ & ÇORBALAR",
+      "available": true
+    },
+    {
+      "name": "ANTEP USULÜ KURU PATLICAN DOLMASI",
+      "description": "Zeytinyağlı, bol baharatlı ve nar ekşili geleneksel kuru patlıcan dolması.",
+      "price": "180",
+      "image": "",
+      "category": "BAŞLANGIÇ & ÇORBALAR",
+      "available": true
+    },
+    {
+      "name": "İÇLİ KÖFTE (KIZARTMA)",
+      "description": "Dışı çıtır çıtır, içi sulu ve lezzetli geleneksel kızarmış içli köfte. (1 adet)",
+      "price": "120",
+      "image": "",
+      "category": "ARA SICAKLAR",
+      "available": true
+    },
+    {
+      "name": "COMBO TABAĞI",
+      "description": "Çıtır atıştırmalıklar, sigara böreği, patates kızartması ve özel soslar. (2 kişiliktir)",
+      "price": "400",
+      "image": "",
+      "category": "ARA SICAKLAR",
+      "available": true
+    },
+    {
+      "name": "PATATES KIZARTMASI",
+      "description": "Altın sarısı çıtır patatesler.",
+      "price": "120",
+      "image": "",
+      "category": "ARA SICAKLAR",
+      "available": true
+    },
+    {
+      "name": "EV YAPIMI SİGARA BÖREĞİ",
+      "description": "Çıtır yufka içerisinde eriyen sıcak Hatay peyniri. (6 adettir)",
+      "price": "120",
+      "image": "",
+      "category": "ARA SICAKLAR",
+      "available": true
+    },
+    {
+      "name": "BİBERLİ EKMEK",
+      "description": "Antakya'nın geleneksel baharatlı salça ve çökelekle harçlı meşhur lezzeti.",
+      "price": "245",
+      "image": "",
+      "category": "ARA SICAKLAR",
+      "available": true
+    },
+    {
+      "name": "FELLAH KÖFTESİ",
+      "description": "Sarımsaklı domates sosu ve taze maydanoz eşliğinde geleneksel bulgur köftesi.",
+      "price": "220",
+      "image": "",
+      "category": "ARA SICAKLAR",
+      "available": true
+    },
+    {
+      "name": "MEVSİM SALATASI",
+      "description": "Mevsim yeşillikleri, havuç, mor lahana, zeytinyağı ve limon sosu.",
+      "price": "250",
+      "image": "",
+      "category": "SALATALAR",
+      "available": true
+    },
+    {
+      "name": "TABLACI SALATASI",
+      "description": "İncecik kıyılmış domates, biber, soğan, bol sumak ve nar ekşisi.",
+      "price": "180",
+      "image": "",
+      "category": "SALATALAR",
+      "available": true
+    },
+    {
+      "name": "ÇOBAN SALATASI",
+      "description": "Küp doğranmış domates, salatalık, biber, taze soğan ve zeytinyağı.",
+      "price": "220",
+      "image": "",
+      "category": "SALATALAR",
+      "available": true
+    },
+    {
+      "name": "TAVUKLU IZGARA SALATA",
+      "description": "Akdeniz yeşillikleri üzerinde ızgara tavuk dilimleri ve özel sos.",
+      "price": "400",
+      "image": "",
+      "category": "SALATALAR",
+      "available": true
+    },
+    {
+      "name": "TON BALIKLI SALATA",
+      "description": "Mısır, zeytin dilimleri, kırmızı soğan ve ton balığının nefis uyumu.",
+      "price": "350",
+      "image": "",
+      "category": "SALATALAR",
+      "available": true
+    },
+    {
+      "name": "GURME 3 PEYNİRLİ SALATA",
+      "description": "Üç peynirli, kuru domates ve zeytinyağı.",
+      "price": "350",
+      "image": "",
+      "category": "SALATALAR",
+      "available": true
+    },
+    {
+      "name": "SHAZİYE BURGER",
+      "description": "Ev yapımı özel burger köftesi, karamelize soğan, eritilmiş peynir ile.",
+      "price": "550",
+      "image": "",
+      "category": "BISTRO KLASİKLERİ",
+      "available": true
+    },
+    {
+      "name": "TAVUK VİYANA ŞNİTZEL",
+      "description": "İncecik açılmış Tavuk bonfile ve patatesin uyumu.",
+      "price": "600",
+      "image": "",
+      "category": "BISTRO KLASİKLERİ",
+      "available": true
+    },
+    {
+      "name": "KREMALI TAVUKLU SPAGETTİ",
+      "description": "krema tavuk ve spagettinin uyumu.",
+      "price": "375",
+      "image": "",
+      "category": "BISTRO KLASİKLERİ",
+      "available": true
+    },
+    {
+      "name": "HATAY KAĞIT KEBABI",
+      "description": "Yağlı kağıt üzerinde, fırında kendi suyuyla pişen özel zırh kebabı.",
+      "price": "550",
+      "image": "",
+      "category": "ANA YEMEKLER (Ana yemek porsiyonlarımızın çiğ tartımları minimum 200 gr dır.)",
+      "available": true
+    },
+    {
+      "name": "HATAY TEPSİ KEBABI",
+      "description": "Özel baharatlı zırh kıyması, fırınlanmış domates ve biber ile. (2 kişilik)",
+      "price": "1100",
+      "image": "",
+      "category": "ANA YEMEKLER (Ana yemek porsiyonlarımızın çiğ tartımları minimum 200 gr dır.)",
+      "available": true
+    },
+    {
+      "name": "HALEP KEBABI",
+      "description": "Kebap arası köz patlıcan ve kaşarın oluşturduğu eşsiz lezzet.",
+      "price": "750",
+      "image": "",
+      "category": "ANA YEMEKLER (Ana yemek porsiyonlarımızın çiğ tartımları minimum 200 gr dır.)",
+      "available": true
+    },
+    {
+      "name": "ADANA KEBAP SERVİS",
+      "description": "Zırhtan çekilmiş el kıyması, közlenmiş biber, domates ve sumaklı soğan eşliğinde.",
+      "price": "600",
+      "image": "",
+      "category": "ANA YEMEKLER (Ana yemek porsiyonlarımızın çiğ tartımları minimum 200 gr dır.)",
+      "available": true
+    },
+    {
+      "name": "SHAZIYE SERVİS KÖFTE",
+      "description": "Izgara köfteler, közlenmiş sebzeler ve lavaş eşliğinde.",
+      "price": "400",
+      "image": "",
+      "category": "ANA YEMEKLER (Ana yemek porsiyonlarımızın çiğ tartımları minimum 200 gr dır.)",
+      "available": true
+    },
+    {
+      "name": "KUZU SAC KAVURMA",
+      "description": "Sac üzerinde taze biber, domates ve sarımsakla sotelenmiş yumuşacık kuzu eti.",
+      "price": "750",
+      "image": "",
+      "category": "ANA YEMEKLER (Ana yemek porsiyonlarımızın çiğ tartımları minimum 200 gr dır.)",
+      "available": true
+    },
+    {
+      "name": "TAVUK SAC KAVURMA",
+      "description": "Baharatlar ve taze sebzelerle sacda harmanlanmış lezzetli tavuk parçaları.",
+      "price": "400",
+      "image": "",
+      "category": "ANA YEMEKLER (Ana yemek porsiyonlarımızın çiğ tartımları minimum 200 gr dır.)",
+      "available": true
+    },
+    {
+      "name": "KUZU LOKUM DÖKÜM",
+      "description": "Döküm tavada mühürlenmiş, ağızda dağılan yumuşacık kuzu bonfile dilimleri.",
+      "price": "900",
+      "image": "",
+      "category": "ANA YEMEKLER (Ana yemek porsiyonlarımızın çiğ tartımları minimum 200 gr dır.)",
+      "available": true
+    },
+    {
+      "name": "KUZU PİRZOLA",
+      "description": "Taze biberiye ile marine edilmiş, ızgarada pişmiş 3 parça kuzu pirzola.",
+      "price": "950",
+      "image": "",
+      "category": "ANA YEMEKLER (Ana yemek porsiyonlarımızın çiğ tartımları minimum 200 gr dır.)",
+      "available": true
+    },
+    {
+      "name": "TAVUK ŞİŞ",
+      "description": "Özel marinasyonlu, şişe dizilmiş sulu tavuk but parçaları.",
+      "price": "350",
+      "image": "",
+      "category": "ANA YEMEKLER (Ana yemek porsiyonlarımızın çiğ tartımları minimum 200 gr dır.)",
+      "available": true
+    },
+    {
+      "name": "KUZU BUT İNCİK",
+      "description": "Düşük ısıda uzun süre pişirilerek hazırlanan , yumuşak dokulu ve yoğun aromalı kuzu incik.",
+      "price": "650",
+      "image": "",
+      "category": "ANA YEMEKLER (Ana yemek porsiyonlarımızın çiğ tartımları minimum 200 gr dır.)",
+      "available": true
+    },
+    {
+      "name": "TAVUK DÖNER DÜRÜM",
+      "description": "Özel soslu tavuk döner, patates ve turşu eşliğinde.",
+      "price": "245",
+      "image": "",
+      "category": "DÜRÜMLERİMİZ",
+      "available": true
+    },
+    {
+      "name": "ADANA KEBAP DÜRÜM",
+      "description": "Sıcak lavaş içerisinde Adana kebap, sumaklı soğan ile.",
+      "price": "345",
+      "image": "",
+      "category": "DÜRÜMLERİMİZ",
+      "available": true
+    },
+    {
+      "name": "NOHUT DÜRÜM",
+      "description": "Antep'in meşhur baharatlı, ezilmiş sıcak nohut dürümü.",
+      "price": "250",
+      "image": "",
+      "category": "DÜRÜMLERİMİZ",
+      "available": true
+    },
+    {
+      "name": "TAVUK ŞİŞ DÜRÜM",
+      "description": "Izgara tavuk şiş parçaları, köz sebzeler ve yeşillik ile.",
+      "price": "250",
+      "image": "",
+      "category": "DÜRÜMLERİMİZ",
+      "available": true
+    },
+    {
+      "name": "SHAZIYE GURME",
+      "description": "Ekmekle bütünleşmiş özel baharatlı et harcı ile pişen destansı lezzet.",
+      "price": "450",
+      "image": "",
+      "category": "DÜRÜMLERİMİZ",
+      "available": true
+    },
+    {
+      "name": "KAVURMA DÜRÜM",
+      "description": "Ağır ateşte pişmiş kavrulmuş etin lavaşla muhteşem buluşması.",
+      "price": "400",
+      "image": "",
+      "category": "DÜRÜMLERİMİZ",
+      "available": true
+    },
+    {
+      "name": "KAHVALTI DÜRÜMÜ",
+      "description": "Peynir, domates, zeytin ezmesi ve taze otlarla hafif bir alternatif.",
+      "price": "200",
+      "image": "",
+      "category": "DÜRÜMLERİMİZ",
+      "available": true
+    },
+    {
+      "name": "EKSTRA KAŞAR",
+      "description": "",
+      "price": "45",
+      "image": "",
+      "category": "DÜRÜMLERİMİZ",
+      "available": true
+    },
+    {
+      "name": "PİRİNÇ PİLAVI",
+      "description": "",
+      "price": "150",
+      "image": "",
+      "category": "YANCILAR & EKSTRALAR",
+      "available": true
+    },
+    {
+      "name": "BULGUR PİLAVI",
+      "description": "",
+      "price": "100",
+      "image": "",
+      "category": "YANCILAR & EKSTRALAR",
+      "available": true
+    },
+    {
+      "name": "EKSTRA LAVAŞ",
+      "description": "",
+      "price": "25",
+      "image": "",
+      "category": "YANCILAR & EKSTRALAR",
+      "available": true
+    },
+    {
+      "name": "KÜNEFE",
+      "description": "",
+      "price": "250",
+      "image": "",
+      "category": "TATLILAR",
+      "available": true
+    },
+    {
+      "name": "ÇITIR KABAK",
+      "description": "",
+      "price": "250",
+      "image": "",
+      "category": "TATLILAR",
+      "available": true
+    },
+    {
+      "name": "HARDALİYE",
+      "description": "",
+      "price": "380",
+      "image": "",
+      "category": "İÇECEKLER",
+      "available": true
+    },
+    {
+      "name": "HİBİSKUS",
+      "description": "",
+      "price": "180",
+      "image": "",
+      "category": "İÇECEKLER",
+      "available": true
+    },
+    {
+      "name": "LİMON ŞERBETİ",
+      "description": "",
+      "price": "180",
+      "image": "",
+      "category": "İÇECEKLER",
+      "available": true
+    },
+    {
+      "name": "AÇIK AYRAN",
+      "description": "",
+      "price": "120",
+      "image": "",
+      "category": "İÇECEKLER",
+      "available": true
+    },
+    {
+      "name": "ŞALGAM",
+      "description": "",
+      "price": "65",
+      "image": "",
+      "category": "İÇECEKLER",
+      "available": true
+    },
+    {
+      "name": "SODA",
+      "description": "",
+      "price": "65",
+      "image": "",
+      "category": "İÇECEKLER",
+      "available": true
+    },
+    {
+      "name": "SU",
+      "description": "",
+      "price": "35",
+      "image": "",
+      "category": "İÇECEKLER",
+      "available": true
+    },
+    {
+      "name": "TÜRK KAHVESİ",
+      "description": "",
+      "price": "135",
+      "image": "",
+      "category": "İÇECEKLER",
+      "available": true
+    },
+    {
+      "name": "ÇAY",
+      "description": "",
+      "price": "45",
+      "image": "",
+      "category": "İÇECEKLER",
+      "available": true
+    },
+    {
+      "name": "GAZLI İÇECEKLER",
+      "description": "",
+      "price": "85",
+      "image": "",
+      "category": "İÇECEKLER",
+      "available": true
+    },
+    {
+      "name": "MEYVE SUYU / ICE TEA",
+      "description": "",
+      "price": "75",
+      "image": "",
+      "category": "İÇECEKLER",
       "available": true
     }
   ]
