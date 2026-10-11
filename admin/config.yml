@@ -1,7 +1,7 @@
 backend:
   name: github
   repo: 129yildirim/ShaziyeGastro
-  branch: yenitasarim
+  branch: main
   base_url: https://decap-proxy.1047yusuf.workers.dev
   auth_endpoint: /auth
 
