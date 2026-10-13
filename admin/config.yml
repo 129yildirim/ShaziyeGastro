@@ -23,7 +23,7 @@ collections:
             name: "items"
             widget: "list"
             label_singular: "Yemek"
-            summary: "{{fields.name}} - {{fields.price}}"
+            summary: "{{fields.name}} - {{fields.price}}TL"
             fields:
               - label: "Yemek Adı"
                 name: "name"
@@ -32,6 +32,7 @@ collections:
               - label: "Açıklama"
                 name: "description"
                 widget: "text"
+                required: false
 
               - label: "Fiyat"
                 name: "price"
@@ -40,6 +41,7 @@ collections:
               - label: "Fotoğraf"
                 name: "image"
                 widget: "image"
+                required: false
 
               - label: "Kategori"
                 name: "category"
